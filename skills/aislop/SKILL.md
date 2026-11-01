@@ -34,7 +34,7 @@ npx aislop scan --changes --json
 
 Decision order:
 1. **Local binary or script** in `devDependencies` — pinned by the lockfile.
-2. **`npx aislop@<version>`** (pinned) — acceptable when no local install exists.
+2. **`npx aislop@<version>`** (pinned; `bunx aislop@<version>` in Bun projects) — acceptable when no local install exists.
 3. **`npx aislop`** (floating) — last resort for interactive sessions. Never in CI.
 4. **Blocked environment** — skip the scan and report the CLI could not be run. Do not install outside the project's dependency workflow.
 
@@ -81,7 +81,7 @@ Skip when: user is only reading, is mid-refactor and asked you to hold off, or e
 
 ## Core workflow
 
-For every command, use `aislop` (local install, preferred) or `npx aislop` (fallback).
+For every command, use `aislop` (local install, preferred) or `npx aislop` (fallback; `bunx aislop` in Bun projects).
 
 ### 1. Scope the scan
 
