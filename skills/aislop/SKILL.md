@@ -5,7 +5,7 @@ description: Code-quality gate and coding guardrail for AI coding agents. Always
 
 # aislop — agent skill
 
-[aislop](https://github.com/scanaislop/aislop) is a deterministic, open-source CLI that scans across six engines, grades 0–100, and catches 50+ rules across 7 languages: swallowed exceptions, hallucinated imports, silent recovery, narrative comments, `as any` casts, oversized functions, SQL injection, eval, hardcoded secrets, and architecture drift.
+[aislop](https://github.com/scanaislop/aislop) is a deterministic, open-source CLI that scans across six engines, grades 0–100, and catches 50+ rules across 12 language targets (Scala in beta): swallowed exceptions, hallucinated imports, silent recovery, narrative comments, `as any` casts, oversized functions, SQL injection, eval, hardcoded secrets, and architecture drift.
 
 **If you follow this skill, you don't ship slop.** It does two jobs:
 
@@ -14,7 +14,9 @@ description: Code-quality gate and coding guardrail for AI coding agents. Always
 
 This skill is not "run `aislop` and report back" — the user could do that themselves. The value is the judgement layer: writing right the first time, reading each finding against source, and fixing what you can before escalating.
 
-Supports TypeScript, JavaScript, Python, Go, Rust, Ruby, PHP, Expo/React Native.
+Supports TypeScript, JavaScript, Expo / React Native, Python, Go, Rust, Ruby, PHP, Java, Scala (beta), C#, and C/C++.
+
+Scala coverage and accuracy are still being refined. Scala 3 indentation-based syntax and real-world scalafmt integration remain ongoing work.
 
 ## Remote execution & supply-chain policy
 
@@ -80,6 +82,10 @@ Skip when: user is only reading, is mid-refactor and asked you to hold off, or e
 | `aislop hook install` | Install per-edit quality hooks. Supports Claude Code, Cursor, Codex, Gemini, pi, and others (run `aislop hook install --help` for the full list). |
 
 ## Core workflow
+
+For scope questions, use `aislop scan --explain-scope --json`; it exits before running engines. A one-run rule exception can use `aislop scan --ignore <rule-id>` without changing config.
+
+For trusted repositories, explicitly opt into project verification with `aislop fix --check "pnpm typecheck" --check "pnpm test"`, or `--run-checks` for configured `fix.checks`. These commands execute project code. They stay off by default; a failure or timeout rolls back fixer-owned changes and returns a non-zero exit.
 
 For every command, use `aislop` (local install, preferred) or `npx aislop` (fallback; `bunx aislop` in Bun projects).
 
