@@ -83,6 +83,10 @@ Skip when: user is only reading, is mid-refactor and asked you to hold off, or e
 
 ## Core workflow
 
+For scope questions, use `aislop scan --explain-scope --json`; it exits before running engines. A one-run rule exception can use `aislop scan --ignore <rule-id>` without changing config.
+
+For trusted repositories, explicitly opt into project verification with `aislop fix --check "pnpm typecheck" --check "pnpm test"`, or `--run-checks` for configured `fix.checks`. These commands execute project code. They stay off by default; a failure or timeout rolls back fixer-owned changes and returns a non-zero exit.
+
 For every command, use `aislop` (local install, preferred) or `npx aislop` (fallback; `bunx aislop` in Bun projects).
 
 ### 1. Scope the scan
